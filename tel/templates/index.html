@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Game</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- <div>
+        <p id="firstname">Hello World</p>
+        <button onclick="sendData()">Send Data</button>
+        <button id="closeApp" onclick="closeApp()">Close App</button>
+    </div> -->  
+
+    <div class="game-container">
+        <div class="player" id="player"></div>
+        <div class="obstacle" id="obstacle"></div>
+    </div>
+    <div class="score">Score: <span id="score">0</span></div>
+
+    
+    
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        console.log(tg.initDataUnsafe)
+        
+        function sendData() {
+            $.ajax({
+                url: '/process',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ 'value': tg.initData }),
+            });
+        };
+
+        function closeApp() {
+            tg.close()
+        };
+
+    </script>
+</body>
+</html>
